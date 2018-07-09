@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="http://icons.iconarchive.com/icons/iconicon/alpha-magnets/96/Letter-j-icon.png" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title>eBay Super Search</title>
+  </head>
+<!-- Main Body -->
+  <body>
+    <script type="text/javascript" src="./searchHandler.js"></script>
+    <header style="text-align: center;">
+      <div class="container">
+        <h1>eBay Super Search</h1>
+      </div>
+    </header>
+
+    <!-- Search Box -->
+    <div class="container" id="searchDiv">
+      <input type="text" class="form-control" name="search" placeholder="Search" value="miranda densite" onkeyup="javascript:fetchResult(this.value);" autofocus>
+    </div>
+
+    <!-- Number of results -->
+    <div id="resultCount"></div>
+<!-- Listing results -->
+
+  <div class="container" id="results">
+    <div class="m-1 container border align-middle" style="height: 140px; background-color: #f1f1f1">
+    <div class="media">
+          <img class="rounded align-self-center" src="http://via.placeholder.com/140x100" alt="Generic placeholder image">
+          <div class="media-body m-3">
+            <h5>This particular sentence is made up of exactly 80 characters to test ebay search</h5>
+          </div>
+        </div>
+      </div>
+  </div>
+        <script>
+
+              var testbox = document.getElementById("results").innerHTML;
+
+        for ( var v=0; v<5; ++v ) {
+
+          f=document.createElement('div');
+          f.innerHTML=testbox;
+          document.getElementById('results').appendChild(f);
+        }
+
+        </script>
+
+
+<div id="debugLink"></div>
+  <div id="scriptDiv">
+    <script id="scriptShow"></script>
+  </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+  </body>
+</html>
