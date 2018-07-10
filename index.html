@@ -27,33 +27,29 @@
     <div id="resultCount"></div>
 <!-- Listing results -->
 
-  <div class="container" id="results">
-    <div class="m-1 container border align-middle" style="height: 140px; background-color: #f1f1f1">
-    <div class="media">
-          <img class="rounded align-self-center" src="http://via.placeholder.com/140x100" alt="Generic placeholder image">
-          <div class="media-body m-3">
-            <h5>This particular sentence is made up of exactly 80 characters to test ebay search</h5>
-          </div>
-        </div>
-      </div>
-  </div>
-        <script>
+<div class="container" id="results"></div>
 
-              var testbox = document.getElementById("results").innerHTML;
+  <script>
 
-        for ( var v=0; v<5; ++v ) {
+var resultArray = []
+var timeout = null;
 
-          f=document.createElement('div');
-          f.innerHTML=testbox;
-          document.getElementById('results').appendChild(f);
-        }
-
-        </script>
+function fetchResult(str) {
+  if ( str.length >2 ){
+    clearTimeout(timeout)
+    var query = "&keywords=" + encodeURI(str);
+    timeout = setTimeout( function () {
+      buildSearch(query);
+    }, 600);
+  }else document.getElementById("results").innerHTML = "";
+}
 
 
+  </script>
+<script id="scriptShow"></script>
 <div id="debugLink"></div>
   <div id="scriptDiv">
-    <script id="scriptShow"></script>
+
   </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
