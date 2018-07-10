@@ -1,15 +1,8 @@
 // Live search pull
 
 var timeout = null;
-
-function submitResult(str) {
-  if ( str.length >2 ){
-    clearTimeout(timeout)
-    var query = "&keywords=" + encodeURI(str);
-    buildSearch(query);
-  }else document.getElementById("results").innerHTML = "";
-  console.log("success");
-}
+var resultArray = []
+var timeout = null;
 
 function fetchResult(str) {
   if ( str.length >2 ){
@@ -17,6 +10,8 @@ function fetchResult(str) {
     var query = "&keywords=" + encodeURI(str);
     timeout = setTimeout( function () {
       buildSearch(query);
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("results").innerHTML = "";
     }, 600);
   }else document.getElementById("results").innerHTML = "";
 }
@@ -47,7 +42,7 @@ function buildSearch(inStr) {
           n.src= url;
           document.body.appendChild(n);
 
-          document.getElementById("debugLink").innerHTML = "<a href=\"" + url + "\">" + url + "</a>";
+          //document.getElementById("debugLink").innerHTML = "<a href=\"" + url + "\">" + url + "</a>";
 }
 
 
@@ -56,16 +51,37 @@ function callback(root) {
   var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
   var resultCount = root.findItemsByKeywordsResponse[0].searchResult || [];
   //document.getElementById("count").innerHTML = resultCount.count;
-console.log(resultCount);
   for (var i = 0; i < items.length; ++i) {
     var item = items[i];
+
+    var Vtitle     = "";
+    var Vpic       = "";
+    var Vviewitem  = "";
+    var Vprice     = "";
+    var Vstate     = "";
+    var Vcondition = "";
+
+    Vtitle     = "";
+    Vpic       = "";
+    Vviewitem  = "";
+    Vprice     = "";
+    Vstate     = "";
+    Vcondition = "";
+
+    Vtitle     = item.title;
+    Vpic       = item.galleryURL;
+    Vviewitem  = item.viewItemURL;
+    Vprice     = item.sellingStatus[0].convertedCurrentPrice[0].__value__;
+    Vstate     = item.sellingStatus[0].sellingState;
+    Vcondition = item.condition[0].conditionDisplayName;
+
     var obj = {
-title:item.title,
-pic:item.galleryURL,
-viewitem:item.viewItemURL,
-price:item.sellingStatus[0].convertedCurrentPrice[0].__value__,
-state:item.sellingStatus[0].sellingState,
-condition: item.condition[0].conditionDisplayName,
+title:Vtitle,
+pic:Vpic,
+viewitem:Vviewitem,
+price:Vprice,
+state:Vstate,
+condition:Vcondition,
 };
 resultArray[i] = obj;
 }

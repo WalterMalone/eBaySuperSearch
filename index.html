@@ -29,24 +29,12 @@
 
 <div class="container" id="results"></div>
 
-  <script>
-
-var resultArray = []
-var timeout = null;
-
-function fetchResult(str) {
-  if ( str.length >2 ){
-    clearTimeout(timeout)
-    var query = "&keywords=" + encodeURI(str);
-    timeout = setTimeout( function () {
-      buildSearch(query);
-    }, 600);
-  }else document.getElementById("results").innerHTML = "";
-}
-
-
-  </script>
 <script id="scriptShow"></script>
+
+<p id="loading" style="display: none;">
+	<img src="loading.gif" alt="Loading…" />
+</p>
+
 <div id="debugLink"></div>
   <div id="scriptDiv">
 
