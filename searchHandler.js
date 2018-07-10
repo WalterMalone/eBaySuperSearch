@@ -59,14 +59,15 @@ function callback(root) {
 console.log(resultCount);
   for (var i = 0; i < items.length; ++i) {
     var item = items[i];
-    var obj = {
-title:item.title,
-pic:item.galleryURL,
-viewitem:item.viewItemURL,
-price:item.sellingStatus[0].convertedCurrentPrice[0].__value__,
-state:item.sellingStatus[0].sellingState,
-condition: item.condition[0].conditionDisplayName,
-};
+    var obj = { title:"", pic:"", viewitem:"", price:"", state:"", condition:"" };
+obj.title     = item.title;
+obj.pic       = item.galleryURL;
+obj.viewitem  = item.viewItemURL;
+obj.price     = item.sellingStatus[0].convertedCurrentPrice[0].__value__;
+obj.state     = item.sellingStatus[0].sellingState;
+if ( item.condition != null )
+obj.condition =  item.condition[0].conditionDisplayName;
+
 resultArray[i] = obj;
 }
 pushResults(resultArray);
@@ -81,7 +82,7 @@ function pushResults(root){
         html.push('<div class="container" id="box">');
         html.push('<div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: ' + color + '">');
         html.push('<div class="media">');
-        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" alt="Gallery image">');
+        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" style="width 140px;>');
         html.push('<h5 id="boxStatus">' + item.state + '</h5>');
         html.push('<div class="media-body m-3">');
         html.push('<h5 id="boxTitle"><a href="' + item.viewitem + '" target="_blank">' + item.title + '</a></h5>');
