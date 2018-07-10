@@ -1,27 +1,3 @@
-
-
-  function callback(root) {
-    var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
-    var resultCount = root.findItemsByKeywordsResponse[0].searchResult || [];
-    //document.getElementById("count").innerHTML = resultCount.count;
-    var html = [];
-    html.push('<div class="container" id="results">');
-    for (var i = 0; i < items.length; ++i) {
-      var item     = items[i];
-      var title    = item.title;
-      var pic      = item.galleryURL;
-      var viewitem = item.viewItemURL;
-      var price    = item.sellingStatus[0].convertedCurrentPrice[0].__value__;
-      var state    = item.sellingStatus[0].sellingState;
-      //var condition= item.sellingStatus.condition.conditionDisplayName;
-      if (null != title && null != viewitem) {
-        html.push('<div class="media h-140"><img class="rounded float-left" src="' + pic + '" alt="Gallery image"><div class="media-body m-3"><h5>' + '<a href="' + viewitem + '" target="_blank">' + title + '</a></h5>' + '   Price: ' + price + '   State: ' + state + '    Cobdition: ' + 'fuck you' + '</div></div></div>');
-      }
-    }
-  document.getElementById("results").innerHTML = html.join("");
-  }
-
-
 // Live search pull
 
 var timeout = null;
@@ -67,9 +43,52 @@ function buildSearch(inStr) {
           s.src= url;
           document.body.appendChild(s);
           */
-          f = document.getElementById("scriptDiv");
-          f.removeChild('scriptShow');
-          document.getElementById("scriptShow").src = url;
+          n=document.createElement('script'); // create script element
+          n.src= url;
+          document.body.appendChild(n);
 
           document.getElementById("debugLink").innerHTML = "<a href=\"" + url + "\">" + url + "</a>";
 }
+
+
+function callback(root) {
+
+  var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
+  var resultCount = root.findItemsByKeywordsResponse[0].searchResult || [];
+  //document.getElementById("count").innerHTML = resultCount.count;
+console.log(resultCount);
+  for (var i = 0; i < items.length; ++i) {
+    var item = items[i];
+    var obj = {
+title:item.title,
+pic:item.galleryURL,
+viewitem:item.viewItemURL,
+price:item.sellingStatus[0].convertedCurrentPrice[0].__value__,
+state:item.sellingStatus[0].sellingState,
+condition: item.condition[0].conditionDisplayName,
+};
+resultArray[i] = obj;
+}
+pushResults(resultArray);
+}
+
+function pushResults(root){
+
+  var html = [];
+      for (var i = 0; i < root.length; ++i) {
+        var item     = root[i];
+        var color = "#f1f3f3"
+        html.push('<div class="container" id="box">');
+        html.push('<div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: ' + color + '">');
+        html.push('<div class="media">');
+        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" alt="Gallery image">');
+        html.push('<h5 id="boxStatus">' + item.state + '</h5>');
+        html.push('<div class="media-body m-3">');
+        html.push('<h5 id="boxTitle"><a href="' + item.viewitem + '" target="_blank">' + item.title + '</a></h5>');
+        html.push('</div></div></div></div>');
+
+
+
+      }
+      document.getElementById("results").innerHTML=html.join("");
+    }
