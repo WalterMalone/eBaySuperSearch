@@ -42,7 +42,7 @@ function buildSearch(inStr) {
           n.src= url;
           document.body.appendChild(n);
 
-          //document.getElementById("debugLink").innerHTML = "<a href=\"" + url + "\">" + url + "</a>";
+          document.getElementById("debugLink").innerHTML = "<a href=\"" + url + "\">" + url + "</a>";
 }
 
 
@@ -73,6 +73,7 @@ function callback(root) {
     Vviewitem  = item.viewItemURL;
     Vprice     = item.sellingStatus[0].convertedCurrentPrice[0].__value__;
     Vstate     = item.sellingStatus[0].sellingState;
+    if (item.condition != null)
     Vcondition = item.condition[0].conditionDisplayName;
 
     var obj = {
@@ -107,4 +108,5 @@ function pushResults(root){
 
       }
       document.getElementById("results").innerHTML=html.join("");
+
     }
