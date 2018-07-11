@@ -12,7 +12,6 @@ function fetchResult(str) {
     timeout = setTimeout( function () {
       buildSearch(query);
       document.getElementById("loading").style.display = "block";
-      document.getElementById("loading").style. = "block";
       document.getElementById("results").innerHTML = "";
     }, 600);
   }else document.getElementById("results").innerHTML = "";
