@@ -1,15 +1,9 @@
 // Live search pull
 
 var timeout = null;
+var resultArray = []
+var timeout = null;
 
-function submitResult(str) {
-  if ( str.length >2 ){
-    clearTimeout(timeout)
-    var query = "&keywords=" + encodeURI(str);
-    buildSearch(query);
-  }else document.getElementById("results").innerHTML = "";
-  console.log("success");
-}
 
 function fetchResult(str) {
   if ( str.length >2 ){
@@ -17,6 +11,9 @@ function fetchResult(str) {
     var query = "&keywords=" + encodeURI(str);
     timeout = setTimeout( function () {
       buildSearch(query);
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("loading").style. = "block";
+      document.getElementById("results").innerHTML = "";
     }, 600);
   }else document.getElementById("results").innerHTML = "";
 }
@@ -82,7 +79,7 @@ function pushResults(root){
         html.push('<div class="container" id="box">');
         html.push('<div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: ' + color + '">');
         html.push('<div class="media">');
-        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" style="width 140px;>');
+        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" style="width 140px;">');
         html.push('<h5 id="boxStatus">' + item.state + '</h5>');
         html.push('<div class="media-body m-3">');
         html.push('<h5 id="boxTitle"><a href="' + item.viewitem + '" target="_blank">' + item.title + '</a></h5>');
