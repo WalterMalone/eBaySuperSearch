@@ -21,7 +21,7 @@
 
     <!-- Search Box -->
     <div class="container" id="searchDiv">
-      <input type="text" class="form-control" name="search" placeholder="Search" value="miranda densite" onkeyup="javascript:fetchResult(this.value);" autofocus>
+      <input type="text" class="form-control" name="search" placeholder="Search" value="miranda densite" onkeyup="keyUp(this.value);" autofocus>
     </div>
     <br />
 
@@ -58,7 +58,7 @@
     <br />
     <br />
     <!-- Number of results -->
-    <div id="resultCount"></div>
+    <div id="resultCount">R</div>
 
     <!-- Listing results -->
     <div class="container" id="results">
@@ -101,7 +101,8 @@
 
     <!-- URL GET request to eBay servers -->
     <div id="scriptDiv">
-      <script id="scriptShow"></script>
+      <script id="scriptActive"></script>
+      <script id="scriptOld"></script>
     </div>
 
 
