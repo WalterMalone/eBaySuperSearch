@@ -17,40 +17,103 @@
         <h1>eBay Super Search</h1>
       </div>
     </header>
+    <br />
 
     <!-- Search Box -->
     <div class="container" id="searchDiv">
-      <input type="text" class="form-control" name="search" placeholder="Search" value="miranda densite" onkeyup="javascript:fetchResult(this.value);" autofocus>
+      <input type="text" class="form-control" name="search" placeholder="Search" value="miranda densite" onkeyup="keyUp(this.value);" autofocus>
+    </div>
+    <br />
+
+
+    <!-- Sorting Control -->
+    <div class="container" id="input">
+      <form >
+        <label for="btn-group">Sorting:</label>
+        <select name="cars">
+          <option value="volvo">Best Match</option>
+          <option value="saab">Oldest First</option>
+          <option value="fiat">Newest First</option>
+          <option value="audi">High Price First</option>
+        </select>
+        <br />
+        <br />
+          <button id="oldBut" type="button" class="btn btn-primary" onclick="sort("old")">Show Sold</button>
+          <button id="newBut" type="button" class="btn btn-primary" onclick="sort("active")">Show Active</button>
+          <button id="twoBut" type="button" class="btn btn-primary" onclick="sort("both")">Show Both</button>
+      </form>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" id="newBut" autocomplete="off" onclick="sort(active)"> Active
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" id="oldBut" autocomplete="off" onclick="sort(old)"> Complete
+        </label>
+        <label class="btn btn-secondary active">
+          <input type="radio" id="twoBut" autocomplete="off" onclick="sort(both)" checked> Both
+        </label>
+      </div>
     </div>
 
+    <br />
+    <br />
     <!-- Number of results -->
-    <div id="resultCount"></div>
-<!-- Listing results -->
+    <div id="resultCount">R</div>
 
-<div class="container" id="results"></div>
+    <!-- Listing results -->
+    <div class="container" id="results">
+      <div class="container" id="box">
+        <div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: #f1f3f3">
+          <div class="media">
+            <img class="rounded " id="boxImg" src="placeholder.png" style="width 140px;">
+            <h5 id="boxStatus" class="align-self-left" style="transform: rotate(90deg);	transform-origin: left bottom 0;">Active</h5>
+            <div class="media-body">
+              <h5 id="boxTitle"><a href="#" target="_blank">Miranda Densite Chassis </a></h5>
+              <div class="row justify-content-between">
+                <div class="col-5">
+                  <p>Sold by: <b>SellerName</b></p>
+                </div>
+                <div class="col-5">
+                  <p style="text-align: right;">State, Country</p>
+                </div>
+              </div>
+              <div class="row justify-content-between">
+                <div class="col-3">
+                  <button type="button" class="btn btn-sm btn-primary" disabled>Views</button>
+                  <button type="button" class="btn btn-secondary btn-sm" disabled>Watchers</button>
+                </div>
+                <div style="text-align: right;" class="col-3">
+                  <button type="button" class="btn btn-sm btn-primary" disabled>Price</button>
+                  <button type="button" class="btn btn-secondary btn-sm" disabled>Shipping</button>
+                </div>
+              </div>
+              <br />
+              <span class="badge badge-pill badge-primary">Primary</span>
+              <span class="badge badge-pill badge-secondary">Location</span>
+              <span class="badge badge-pill badge-success">Success</span>
+              <span class="badge badge-pill badge-danger">Danger</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <script>
 
-var resultArray = []
-var timeout = null;
-
-function fetchResult(str) {
-  if ( str.length >2 ){
-    clearTimeout(timeout)
-    var query = "&keywords=" + encodeURI(str);
-    timeout = setTimeout( function () {
-      buildSearch(query);
-    }, 600);
-  }else document.getElementById("results").innerHTML = "";
-}
+    <!-- URL GET request to eBay servers -->
+    <div id="scriptDiv">
+      <script id="scriptActive"></script>
+      <script id="scriptOld"></script>
+    </div>
 
 
-  </script>
-<script id="scriptShow"></script>
-<div id="debugLink"></div>
-  <div id="scriptDiv">
+    <!-- Loading gif animation -->
 
-  </div>
+    <p id="loading" class="mx-auto" style="display: none; text-align: center;">
+    	<img src="loading.gif" alt="Loading…" />
+    </p>
+
+    <div id="debugLink"></div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
