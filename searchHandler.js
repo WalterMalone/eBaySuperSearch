@@ -58,6 +58,7 @@ function buildSearch(inStr) {
           url += "&GLOBAL-ID=EBAY-US";
           url += "&RESPONSE-DATA-FORMAT=JSON";
           url += "&REST-PAYLOAD";
+          url += "&outputSelector=SellerInfo"
           url += inStr;
           url += "&paginationInput.entriesPerPage=100";
 
@@ -114,8 +115,8 @@ function buildObj(item) { // Pull values from JSON array
 // Initialize empty incase of null
     var obj = { title:"", start:"", end:"", pic:"", viewitem:"", price:"",
       state:"", condition:"", type:"", shipping:"", location:"", country:"",
-      category:"", buyitnow:"", binprice:"", bestoffer:"", watchers:"",
-      returns:"", toprated:"" };
+      category:"", buyitnow:"", binprice:"", bestoffer:"", watchers:0,
+      returns:"", seller:"", feedback:"", positive:"", toprated:"" };
 // Assign values
     obj.title     = item.title;
     obj.start     = item.listingInfo[0].startTime;
@@ -134,9 +135,17 @@ function buildObj(item) { // Pull values from JSON array
     obj.buyitnow  = item.listingInfo[0].buyItNowAvailable;
     obj.binprice  = item.listingInfo[0].buyItNowAvailable;
     obj.bestoffer = item.listingInfo[0].bestOfferEnabled;
-    obj.watchers  = item.listingInfo[0].watchCount;
+    if ( item.listingInfo[0].watchCount != null )
+      obj.watchers  = item.listingInfo[0].watchCount;
     obj.returns   = item.returnsAccepted;
+    obj.seller    = item.sellerInfo[0].sellerUserName;
+    obj.feedback  = item.sellerInfo[0].feebackScore;
+    obj.positive  = item.sellerInfo[0].positiveFeedbackPercent;
     obj.toprated  = item.topRatedListing;
+    if ( obj.state=="EndedWithoutSales" )
+      obj.state = "Unsold";
+    if ( obj.state=="EndedWithSales" )
+      obj.state = "Sold";
 
   return obj;
 }
@@ -167,12 +176,27 @@ function boxResults(root){
         html.push('<div class="container" id="box">');
         html.push('<div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: ' + color + '">');
         html.push('<div class="media">');
-        html.push('<img class="rounded align-self-center" id="boxImg" src="' + item.pic + '" style="width 140px;">');
-        html.push('<h5 id="boxStatus">' + item.state + '</h5>');
-        html.push('<p>' + item.start + item.end + '</p>');
-        html.push('<div class="media-body m-3">');
+        html.push('<img class="rounded" id="boxImg" src="' + item.pic + '" style="width 140px;">');
+        html.push('<h5 id="boxStatus" class="align-self-left" style="transform: rotate(90deg);	transform-origin: left bottom 0;">' + item.state + '</h5>');
+        html.push('<div class="media-body text-align: left;">');
         html.push('<h5 id="boxTitle"><a href="' + item.viewitem + '" target="_blank">' + item.title + '</a></h5>');
-        html.push('</div></div></div></div>');
+        html.push('<div class="row justify-content-between">');
+        html.push('<div class="col-5">');
+        html.push('<p>Sold by: <b>' + item.seller + '</b></p>');
+        html.push('</div>');
+        html.push('<div class="col-5">');
+        html.push('<p style="text-align: right;">' + item.location + '</p>');
+        html.push('</div></div>');
+        html.push('<div class="row justify-content-between">');
+        html.push('<div class="col-3">');
+        html.push('<button type="button" class="btn btn-sm btn-primary" disabled>Watchers:</button>');
+        html.push('<button type="button" class="btn btn-secondary btn-sm" disabled>' + item.watchers + '</button>');
+        html.push('</div>');
+        html.push('<div style="text-align: right;" class="col-3">');
+        html.push('<button type="button" class="btn btn-sm btn-primary" disabled>$'+ item.price +'</button>');
+        html.push('<button type="button" class="btn btn-secondary btn-sm" disabled>' + item.shipping + '</button>');
+        html.push('</div></div></div></div></div></div>');
+
       }
       document.getElementById("results").innerHTML=html.join("");
     }
