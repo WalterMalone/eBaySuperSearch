@@ -5,49 +5,50 @@ var oldResults = [];
 var oldLength;
 var activeResults = [];
 var activeLength;
-var sortedResults = []
+var resultLength;
+var resultArray = [];
+var sortedResults = [];
+var currentPage;
+var scrollKill = true;
 var timeout = null;
+var boxCount = 0;
 var set = { show:"both", sort:"" };
+var query = "";
 
 //    Search typing input timeout filter
 function keyUp(str) {
   if ( str.length >2 ){
     clearTimeout(timeout)
-    var input = "&keywords=" + encodeURI(str);
-    timeout = setTimeout( searchManager(input), 600);
-  }else document.getElementById("results").innerHTML = "";
+    query = "&keywords=" + encodeURI(str);
+    timeout = setTimeout( searchManager(), 600 );
+  }else {
+    scrollKill = true
+    document.getElementById("results").innerHTML = "";
+
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("scriptDiv").innerHTML = "";
+      resultArray = null;
+      currentPage = 0;
+}
 }
 
-function searchManager(query) {
+function searchManager() {
   document.getElementById("loading").style.display = "block";
   document.getElementById("results").innerHTML = "";
-  buildSearch(query);
+  document.getElementById("scriptDiv").innerHTML = "";
+  resultArray = null;
+  currentPage = 0;
+  buildSearch(query, true, 1);
+  buildSearch(query, false, 1);
 }
 
-function sort(type) {
-  set.show = type;
-  switch (type) {
-    case old:
 
-      break;
-    case active:
+function buildSearch(inStr, isActive, page) {
 
-      break;
-    case both:
-
-      break;
-    default:
-
-  }
-}
-
-function buildSearch(inStr) {
-    var flip = 0;
-    var isActive = true;
-      while ( flip<2 ) {
       var url = "http://svcs.ebay.com/services/search/FindingService/v1";
       if ( isActive ) {
-          url += "?OPERATION-NAME=findItemsByKeywords"
+          url += "?OPERATION-NAME=findItemsByKeywords";
           url += "&callback=callbackActive";
         } else {
           url += "?OPERATION-NAME=findCompletedItems";
@@ -58,57 +59,105 @@ function buildSearch(inStr) {
           url += "&GLOBAL-ID=EBAY-US";
           url += "&RESPONSE-DATA-FORMAT=JSON";
           url += "&REST-PAYLOAD";
-          url += "&outputSelector=SellerInfo"
+          url += "&outputSelector=SellerInfo";
           url += inStr;
           url += "&paginationInput.entriesPerPage=100";
+          url += "&paginationInput.pageNumber=" + page;
 
           n=document.createElement('script'); // create script element
           n.src = url;
 
+    //      console.log(n);
+
         if ( isActive ) {
-            var div = document.getElementById("scriptActive");
-            div.remove();
-            n.id = "scriptActive"
-            document.body.appendChild(n);
+            n.id = "scriptActive" + page;
+            document.getElementById("scriptDiv").appendChild(n);
         } else {
-            var div = document.getElementById("scriptOld");
-            div.remove();
-            n.id = "scriptOld"
-            document.body.appendChild(n);
+            n.id = "scriptOld" + page;
+            document.getElementById("scriptDiv").appendChild(n);
         }
-      isActive = false;
-      flip++;
-    }
 
 }
-// Main eBay finding construction
-/*
-function append(root) {
-  var div = document.getElementById("scriptShow");
-  div.remove();
-  n=document.createElement('script'); // create script element
-  n.src= root;
-  n.id = "scriptShow"
-  document.body.appendChild(n);
+function scrollCall() {
+  if ( scrollKill == true ) break;
+  console.log(scrollKill);
+  var loadNum = 25
+          while(true) {
+            let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+            if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
 
+          }
+
+          let a = resultArray.length;
+          let r = a - currentPage;
+          if ( r<=loadNum ) {
+          loadNum = r;
+          scrollKill = true;
+          document.getElementById("loading").style.display = "none;";
+          }
+
+          let next = [];
+          for ( var i=0; i<loadnum; i++ ) {
+            next[i] = resultArray[i]
+          }
+
+          boxResults(next);
 }
-*/
-function callbackActive(root) {
-  var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
-  activeLength = root.findItemsByKeywordsResponse[0].searchResult["0"]["@count"] || [];
+
+
+function callback(root, isActive) {
+  if ( isActive ) {
+    var items       = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
+    let totalPages  = root.findItemsByKeywordsResponse[0].paginationOutput[0].totalPages;
+    var page        = root.findItemsByKeywordsResponse[0].paginationOutput[0].pageNumber;
+  } else {
+    var items       = root.findCompletedItemsResponse[0].searchResult[0].item || [];
+    let totalPages  = root.findCompletedItemsResponse[0].paginationOutput[0].totalPages;
+    var page        = root.findCompletedItemsResponse[0].paginationOutput[0].pageNumber;
+  }
+    var results = [];
   for (var i = 0; i < items.length; ++i) {
-    activeResults[i] = buildObj(items[i]);
+    results[i] = buildObj(items[i]);
+  }
+  if ( page==1 ) {
+    if ( resultArray!=null ) {
+      console.log(results.length);
+      resultArray = resultArray.concat(results);
+      console.log(resultArray.length);
+      resultLength = resultArray.length;
+      document.getElementById("resultCount").innerHTML =
+        '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
+      resultArray.sort(function(a, b){return b.price - a.price});
+      boxResults(resultArray);
+      page++;
+      currentPage = resultArray.length;
+    } else {
+      resultArray = results;
+      console.log(resultArray.length);
+    }
+  } else {
+
+      resultArray.concat(results);
+      resultLength = resultArray.length;
+      document.getElementById("resultCount").innerHTML =
+        '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
+
+      if ( page<totalPages ) {
+        page++;
+        buildSearch(query, isActive, page);
+
+      }
+
+  }
+
 }
-pushResults(activeResults);
+
+function callbackActive(root) {
+    callback(root, true)
 }
 
 function callbackOld(root) {
-  var items = root.findCompletedItemsResponse [0].searchResult[0].item || [];
-  oldLength = root.findCompletedItemsResponse [0].searchResult["0"]["@count"] || [];
-  for (var i = 0; i < items.length; ++i) {
-    oldResults[i] = buildObj(items[i]);
-}
-pushResults(oldResults);
+    callback(root, false)
 }
 
 function buildObj(item) { // Pull values from JSON array
@@ -146,7 +195,8 @@ function buildObj(item) { // Pull values from JSON array
       obj.state = "Unsold";
     if ( obj.state=="EndedWithSales" )
       obj.state = "Sold";
-
+    if ( obj.state[0]=="Active" )
+      obj.state = "Active";
   return obj;
 }
 
@@ -154,26 +204,32 @@ function combineArray(results, isActive) {
 
 }
 
-function pushResults() {
-  sortedResults = activeResults.concat(oldResults);
-  sortedResults.sort(function(a, b){return b.price - a.price});
-  html = boxResults(sortedResults);
-}
-
 function boxResults(root){
+
+  console.log(root[1].state);
 
   var html = [];
       for (var i = 0; i < root.length; ++i) {
         var item     = root[i];
-        switch(item.state) {
-          case n:
+        boxCount++;
+
+        switch ( item.state ) {
+          case "Active":
+            var color = "#B5D3FF";
             break;
-          case n:
+          case "Unsold":
+            var color = "#E6E6E6";
+            break;
+          case "Sold":
+            var color = "#B8FCD6";
             break;
           default:
-}
-        var color = "#f1f3f3"
-        html.push('<div class="container" id="box">');
+          var color = "#FF0045";
+          break;
+        }
+
+
+
         html.push('<div class="m-1 container border align-middle" id="boxMain" style="height: 155px; background-color: ' + color + '">');
         html.push('<div class="media">');
         html.push('<img class="rounded" id="boxImg" src="' + item.pic + '" style="width 140px;">');
@@ -182,21 +238,26 @@ function boxResults(root){
         html.push('<h5 id="boxTitle"><a href="' + item.viewitem + '" target="_blank">' + item.title + '</a></h5>');
         html.push('<div class="row justify-content-between">');
         html.push('<div class="col-5">');
-        html.push('<p>Sold by: <b>' + item.seller + '</b></p>');
+        html.push('<p>#: <b>' + boxCount + '</b></p>');
         html.push('</div>');
         html.push('<div class="col-5">');
         html.push('<p style="text-align: right;">' + item.location + '</p>');
         html.push('</div></div>');
         html.push('<div class="row justify-content-between">');
-        html.push('<div class="col-3">');
+        html.push('<div class="col-5">');
         html.push('<button type="button" class="btn btn-sm btn-primary" disabled>Watchers:</button>');
         html.push('<button type="button" class="btn btn-secondary btn-sm" disabled>' + item.watchers + '</button>');
         html.push('</div>');
-        html.push('<div style="text-align: right;" class="col-3">');
+        html.push('<div style="text-align: right;" class="col-5">');
         html.push('<button type="button" class="btn btn-sm btn-primary" disabled>$'+ item.price +'</button>');
         html.push('<button type="button" class="btn btn-secondary btn-sm" disabled>' + item.shipping + '</button>');
-        html.push('</div></div></div></div></div></div>');
+        html.push('</div></div></div></div></div>');
 
       }
-      document.getElementById("results").innerHTML=html.join("");
+      var box = document.createElement('div');
+      box.id = 'box';
+      box.class = 'container';
+      box.innerHTML = html.join("");
+      document.getElementById("results").appendChild(box);
+
     }
