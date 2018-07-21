@@ -4,9 +4,7 @@
 
 var timeout = null;
 var oldResults = [];
-var oldLength;
-var activeResults = [];
-var activeLength;
+var newResults = [];
 var resultLength;
 var resultArray = [];
 var sortedResults = [];
@@ -16,6 +14,8 @@ var timeout = null;
 var boxCount = 0;
 var set = { show:"both", sort:"" };
 var query = "";
+
+
 //    Search typing input timeout filter
 function keyUp(str) {
   scrollKill = true
@@ -23,6 +23,9 @@ function keyUp(str) {
   document.getElementById("scriptDiv").innerHTML = "";
   boxCount = 0;
   resultArray = [];
+  sortedResults = [];
+  oldResults = [];
+  newResults = [];
   currentPage = 0;
 
   if ( str.length >2 ){
@@ -44,33 +47,7 @@ function searchManager() {
 }
 
 
-function scrollCall() {
-console.log("ScrollKill: "+scrollKill);
-  if ( scrollKill != true ) {
-  var loadNum = 25
-          while(true) {
-            let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
-            if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
 
-          }
-
-          let a = resultArray.length;
-          let r = a - currentPage;
-          if ( r<=loadNum ) {
-          loadNum = r;
-          scrollKill = true;
-          document.getElementById("loading").style.display = "none;";
-          }
-
-          let next = [];
-          for ( var i=0; i<loadnum; i++ ) {
-            next[i] = resultArray[i]
-          }
-          console.log("Scrolling loading "+next.length+" results");
-          boxResults(next);
-        }
-}
-window.addEventListener('scroll', scrollCall);
 
 
 

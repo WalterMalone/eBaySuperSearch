@@ -1,0 +1,14 @@
+#formDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+#searchForm {
+  
+}
+
+.formBits {
+  height: 50px;
+  background-color: #f1e1e1;
+  margin: 2px;
+}

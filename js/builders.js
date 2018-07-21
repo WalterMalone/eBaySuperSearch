@@ -42,8 +42,8 @@ function buildObj(item) { // Pull values from JSON array
       returns:"", seller:"", feedback:"", positive:"", toprated:"" };
 // Assign values
     obj.title     = item.title;
-    obj.start     = item.listingInfo[0].startTime;
-    obj.end       = item.listingInfo[0].endTime;
+    obj.start     = new Date(item.listingInfo[0].startTime);
+    obj.end       = new Date(item.listingInfo[0].endTime);
     obj.pic       = item.galleryURL;
     obj.viewitem  = item.viewItemURL;
     obj.price     = item.sellingStatus[0].convertedCurrentPrice[0].__value__;
@@ -98,10 +98,10 @@ console.log("Boxing: "+root.length);
         }
 
 
-        let startDate = item.start.toStr
-        let endDate = item.end.slice(14);
-
-        console.log(startDate);
+        //let startDate = item.start.toStr
+        //let endDate = item.end.slice(14);
+        let startDate = 2;
+        let endDate = 3;
 
         html.push('<div class="box" style="background-color: '+color+';" id="box">');
         html.push('<div class="boxImg"><img class="rounded" id="boxImg" src="'+item.pic+'" /></div>');
