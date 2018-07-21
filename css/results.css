@@ -1,0 +1,110 @@
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+#results {
+  margin: auto;
+  width: 900px;
+  height: auto;
+  padding: 6px;
+}
+
+.box {
+  width: 888px;
+  height: 150px;
+  display: flex;
+  margin: 3px;
+  overflow: hidden;
+}
+
+.boxImg {
+  width: 140px;
+  height: 140px;
+  margin: 5px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-shrink: 0;
+}
+
+#boxImg {
+  display: flex;
+  flex-grow: 0;
+
+}
+
+.boxContent {
+  display: inline-grid;
+  flex-grow: 1;
+  margin: 5px;
+  height: 140px;
+}
+
+.boxBit {
+  margin: 1px;
+  padding: 0px;
+  font-size: 14pt;
+  overflow: visible;
+  height: auto;
+}
+
+.boxTitle {
+grid-column:  1 / span 3;
+grid-row: 1;
+height: auto;
+
+}
+
+.boxLeft {
+grid-column: 1;
+grid-row: 2;
+display: grid;
+text-align: center;
+}
+
+.boxPrice {
+grid-column: 1;
+grid-row: 1 / span 2;
+font-size: 18pt;
+}
+.boxShip {
+grid-column: 2;
+grid-row: 1 / span 2;
+font-size: 18pt;
+}
+.boxPriceSm {
+grid-column: 1;
+grid-row: 3;
+vertical-align: top;
+}
+.boxShipSm {
+grid-column: 2;
+grid-row: 3;
+vertical-align: top;
+}
+.boxStatus {
+grid-column: 1 / span 2;
+grid-row: 4 / span 2;
+font-size: 18pt;
+text-align: left;
+}
+
+
+
+.boxCenter {
+grid-column: 2;
+grid-row: 2;
+text-align: center;
+}
+ul {
+  list-style-type: none;
+  list-style-position: outside;
+}
+
+
+.boxRight {
+grid-column: 3;
+grid-row: 2;
+text-align: right;
+}
