@@ -4,7 +4,7 @@ var sortSet = "hiPrice";
 
 function setShow(root) {
   showSet = root;
-  console.log(root);
+  //console.log(root);
   firstLoad();
 }
 
@@ -47,5 +47,5 @@ function sortResults() {
     break;
     default: break;
   }
-  console.log("resultArray: "+resultArray.length)
+//  console.log("resultArray: "+resultArray.length)
 }

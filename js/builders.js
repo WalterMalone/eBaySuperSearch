@@ -22,7 +22,7 @@ function buildSearch(inStr, isActive, page) {
           n=document.createElement('script'); // create script element
           n.src = url;
 
-          console.log(n);
+        //  console.log(n);
 
         if ( isActive ) {
             n.id = "scriptActive" + page;
@@ -76,7 +76,8 @@ function buildObj(item) { // Pull values from JSON array
 
 
 function boxResults(root){
-console.log("Boxing: "+root.length);
+console.log("Boxing: ");
+console.log(root);
   var html = [];
       for (var i = 0; i < root.length; ++i) {
         var item     = root[i];
