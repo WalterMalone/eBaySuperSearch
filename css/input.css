@@ -1,5 +1,6 @@
 #formDiv {
   display: flex;
+  flex-wrap: wrap;
 }
 
 #searchForm {

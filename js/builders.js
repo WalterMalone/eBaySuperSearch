@@ -101,8 +101,8 @@ console.log(root);
 
         //let startDate = item.start.toStr
         //let endDate = item.end.slice(14);
-        let startDate = 2;
-        let endDate = 3;
+        let startDate = item.start.toLocaleDateString();
+        let endDate = item.end.toLocaleDateString();
 
         html.push('<div class="box" style="background-color: '+color+';" id="box">');
         html.push('<div class="boxImg"><img class="rounded" id="boxImg" src="'+item.pic+'" /></div>');
@@ -118,7 +118,7 @@ console.log(root);
         html.push('<p>Shipped from: <b>'+item.location+'</b></p>');
         html.push('<p>0 Watchers</p>');
         html.push('<p><b>#num</b> views</p>');
-        html.push('<p>Ending in <b>'+endDate+'</b></p></div>');
+        html.push('<p>Ending on <b>'+endDate+'</b></p></div>');
         html.push('<div class="boxBit boxRight">');
         html.push('<p>Listed by: <b>'+item.seller+'</b></p>');
         html.push('<p><b>'+item.feedback+'</b> Feedback at <b>'+item.positive+'%</b></p>');

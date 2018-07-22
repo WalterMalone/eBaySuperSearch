@@ -1,5 +1,5 @@
 var showSet = "both";
-var sortSet = "hiPrice";
+var sortSet = "new";
 
 
 function setShow(root) {
@@ -30,16 +30,16 @@ function sortResults() {
     default: break;
   }
   switch (sortSet) {
-    case "newest":
-    resultArray.sort(function(a, b){return new Date(b.startTime) - new Date(a.startTime)});
+    case "new":
+    resultArray.sort(function(a, b){return b.start.getTime() - a.start.getTime()});
     break;
-    case "oldest":
-    resultArray.sort(function(a, b){return new Date(a.startTime) - new Date(b.startTime)});
+    case "old":
+    resultArray.sort(function(a, b){return a.start.getTime() - b.start.getTime()});
     break;
-    case "hiPrice":
+    case "hi":
     resultArray.sort(function(a, b){return b.price - a.price});
     break;
-    case "loPrice":
+    case "lo":
     resultArray.sort(function(a, b){return a.price - b.price});
     break;
     case "hot":
