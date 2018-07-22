@@ -32,6 +32,7 @@
       <div class="formBits">
         <input type="text" class="form-control" id="searchForm" placeholder="Search" value="miranda densite" onkeyup="keyUp(this.value);" autofocus>
       </div>
+      <!-- Sorting Control -->
       <div class="formBits">
         <div id="sortForm" class="btn-group-toggle" data-toggle="buttons">
           <label id="active" class="btn m-2 btn-secondary" onClick="setShow(this.id)">
@@ -45,34 +46,22 @@
           </label>
         </div>
       </div>
-      <div class="formBits"></div>
-      <div class="formBits"></div>
-      <div class="formBits"></div>
-      <div class="formBits"></div>
+      <div class="formBits">
+        <label>Sorting: </label>
+        <select name="sortMenu">
+          <option value="old">Oldest First</option>
+          <option value="new">Newest First</option>
+          <option value="hi">High Price First</option>
+          <option value="lo">Low Price First</option>
+          <option value="hot">Hottest First</option>
+          </select>
+      </div>
+      <div class="formBits" style="display: none;"></div>
+      <div class="formBits" style="display: none;"></div>
+      <div class="formBits" style="display: none;"></div>
 
 
 
-
-    </div>
-    <br />
-
-
-    <!-- Sorting Control -->
-    <div class="container" id="input">
-      <form >
-        <label for="btn-group">Sorting:</label>
-        <select name="cars">
-          <option value="volvo">Best Match</option>
-          <option value="saab">Oldest First</option>
-          <option value="fiat">Newest First</option>
-          <option value="audi">High Price First</option>
-        </select>
-        <br />
-        <br />
-          <button id="oldBut" type="button" class="btn btn-primary" onclick="sort("old")">Show Sold</button>
-          <button id="newBut" type="button" class="btn btn-primary" onclick="sort("active")">Show Active</button>
-          <button id="twoBut" type="button" class="btn btn-primary" onclick="sort("both")">Show Both</button>
-      </form>
 
     </div>
 
@@ -100,7 +89,7 @@
       }
 
       </style>
-      
+
     </div>
 
     <!-- URL GET request to eBay servers -->
