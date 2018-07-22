@@ -22,7 +22,7 @@ if ( page!=0 ) {
   }
   console.log("Page: "+page+"  , isActive: "+isActive+'  , Total Pages: '+totalPages);
 
-    console.log("Results: "+results);
+    //console.log("Results: "+results);
     if ( isActive ) {
       newResults = newResults.concat(results);
     } else {
@@ -48,10 +48,11 @@ if ( page!=0 ) {
 
 
 
-function firstLoad(isActive) {
+function firstLoad() {
 
     sortResults();
     let firstArray = [];
+    boxCount = 0;
     if ( resultArray.length<firstNum )
       firstNum = resultArray.length;
     for ( var i=0; i<firstNum; i++ ) {

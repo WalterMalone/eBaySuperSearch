@@ -130,4 +130,6 @@ console.log("Boxing: "+root.length);
       box.innerHTML = html.join("");
       document.getElementById("results").appendChild(box);
 
+      document.getElementById("loading").style.display = "none";
+
     }

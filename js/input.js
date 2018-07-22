@@ -4,12 +4,13 @@ var sortSet = "hiPrice";
 
 function setShow(root) {
   showSet = root;
-  sortResults();
+  console.log(root);
+  firstLoad();
 }
 
 function setSort(root) {
   sortSet = root;
-  sortResults();
+  firstLoad();
 }
 
 
@@ -18,7 +19,7 @@ function sortResults() {
   switch (showSet) {
     case "both":
       resultArray = newResults.concat(oldResults);
-      console.log(resultArray.length+",  "+newResults.length+",  "+oldResults.length);
+      //console.log(resultArray.length+",  "+newResults.length+",  "+oldResults.length);
       break;
     case "active":
       resultArray = newResults;
@@ -46,4 +47,5 @@ function sortResults() {
     break;
     default: break;
   }
+  console.log("resultArray: "+resultArray.length)
 }
