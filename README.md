@@ -1,8 +1,21 @@
 # eBaySuperSearch
 An advanced eBay search portal to provide quick and in-depth insights on sales.
-# G.O.v4.0
-_A functional and stylized early iteration_
-## Changes
+# G.O.v5.5
+_An interactive iteration with live-update sorting and infinite scrolling!_
+
+## New Features in 5.5
+- Infinite scrolling has been implemented
+- General UI improvements of the sorting form
+
+## 5.0 Changes
+- New data sorting subsystem with a number of features:
+- Allows for sorting by active / ended
+- Fetches all pages in the background
+- Shows you the first active & ended pages while doing so
+- Allows for live custom sorting without making new API calls
+- General stability and bug improvements over old system
+
+## 4.0 Changes
 - Major rewrite of boxes to show significantly more information
 - Use of new CSS stylesheet to clean up box formatting
 - Many fixes to the data compiler subsystem to fix errors

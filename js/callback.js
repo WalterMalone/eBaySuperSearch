@@ -20,7 +20,7 @@ if ( page!=0 ) {
   for ( i = 0; i < items.length; i++ ) {
     results[i] = buildObj(items[i]);
   }
-  console.log("Page: "+page+"  , isActive: "+isActive+'  , Total Pages: '+totalPages);
+  //console.log("Page: "+page+"  , isActive: "+isActive+'  , Total Pages: '+totalPages);
 
     //console.log("Results: "+results);
     if ( isActive ) {
@@ -30,7 +30,7 @@ if ( page!=0 ) {
     }
 
     resultLength = newResults.length + oldResults.length;
-    console.log("resultLength: "+resultLength);
+  //  console.log("resultLength: "+resultLength);
     document.getElementById("resultCount").innerHTML =
       '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
       if ( page==1 ) firstLoad();
@@ -53,13 +53,16 @@ function firstLoad() {
     sortResults();
     let firstArray = [];
     boxCount = 0;
-    if ( resultArray.length<firstNum )
+    if ( resultArray.length<firstNum ){
       firstNum = resultArray.length;
+      scrollKill = true
+    } else scrollKill = false;
     for ( var i=0; i<firstNum; i++ ) {
       firstArray[i] = resultArray[i];
     }
     document.getElementById("results").innerHTML = "";
     boxResults(firstArray);
-    currentPage = firstArray.length;
+    currentPage = firstNum;
+
 
   }
