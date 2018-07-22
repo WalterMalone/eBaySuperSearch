@@ -1,3 +1,8 @@
+var firstNum = 30;
+
+
+
+
 function callback(root, isActive) {
   let items, totalPages, page;
   if ( isActive ) {
@@ -10,61 +15,51 @@ function callback(root, isActive) {
     page        = root.findCompletedItemsResponse[0].paginationOutput[0].pageNumber;
   }
 
+if ( page!=0 ) {
   let results = [];
-
-  for (var i = 0; i < items.length; ++i) {
+  for ( i = 0; i < items.length; i++ ) {
     results[i] = buildObj(items[i]);
   }
-
-  if ( page!=0 ) {
   console.log("Page: "+page+"  , isActive: "+isActive+'  , Total Pages: '+totalPages);
-  if ( page==1 ) {
-    if ( resultArray!="" ) {
-      //console.log(results.length);
-      resultArray = resultArray.concat(results);
-      console.log("!!!"+resultArray.length);
-      resultLength = resultArray.length;
-      document.getElementById("resultCount").innerHTML =
-        '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
-      resultArray.sort(function(a, b){return b.price - a.price});
-      var dataSet = [];
-      var firstLoad = 30;
-      if ( resultArray.length<firstLoad )
-        firstLoad = resultArray.length;
-      for ( var i=0; i<firstLoad; i++ ) {
-        dataSet[i] = resultArray[i];
-      }
 
-      console.log("ResultArray Length: "+resultArray.length);
-      boxResults(dataSet);
-      currentPage = dataSet.length;
-
-      if ( page<totalPages ){
-      page++;
-      buildSearch(query, false, page);
-      buildSearch(query, true, page);
-    }
+    //console.log("Results: "+results);
+    if ( isActive ) {
+      newResults = newResults.concat(results);
     } else {
-      console.log("Null Array");
-      resultArray = results;
-      console.log("Null ResultArray Length: "+resultArray.length);
+      oldResults = oldResults.concat(results);
     }
 
-  } else if ( page<=totalPages ) {
-    console.log("Results: "+results);
-      resultArray.concat(results);
-      resultLength = resultArray.length;
-      document.getElementById("resultCount").innerHTML =
-        '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
-console.log("ResultLength: "+resultLength);
+    resultLength = newResults.length + oldResults.length;
+    console.log("resultLength: "+resultLength);
+    document.getElementById("resultCount").innerHTML =
+      '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
+      if ( page==1 ) firstLoad();
+
+      sortResults();
+
       if ( page<totalPages ) {
-        console.log("Next Page");
         page++;
         buildSearch(query, isActive, page);
-
       }
 
-  } else console.log("Error, page:totalPages - "+page+":"+totalPages);
+  }
 
-}else console.log("Page Zero, isActive = "+isActive);
 }
+
+
+
+function firstLoad() {
+
+    sortResults();
+    let firstArray = [];
+    boxCount = 0;
+    if ( resultArray.length<firstNum )
+      firstNum = resultArray.length;
+    for ( var i=0; i<firstNum; i++ ) {
+      firstArray[i] = resultArray[i];
+    }
+    document.getElementById("results").innerHTML = "";
+    boxResults(firstArray);
+    currentPage = firstArray.length;
+
+  }

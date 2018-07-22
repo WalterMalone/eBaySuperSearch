@@ -1,25 +1,33 @@
-var page;
+
+window.addEventListener('scroll', scrollCall);
 
 
-function populate() {
-if ( !resultLength) {
-  console.log("no results");
-  break;
-}
-while(true) {
-let windowBottom = document.documentElement.getBoundingClientRect().bottom;
-if (windowBottom > document.documentElement.clientHeight + 100) break;
 
-  console.log("tried");
-  var inStr = "&keywords" + encodeURI(getElementById('search'));
-  buildSearch(inStr);
-}
-function(i, p) {
-  console.log("tried");
-  var inStr = "&keywords" + encodeURI(getElementById('search'));
-  inStr += "&paginationInput.pageNumber=" + "i";
-  return '<script>' + inStr + '</script' + '>';
-}
-}
+function scrollCall() {
+//console.log("ScrollKill: "+scrollKill);
+          while(true) {
+            if ( scrollKill ) break;
+            let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+            if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
 
-window.addEventListener('scroll', populate);
+            loadPage();
+
+          }
+        }
+
+function loadPage() {
+          let a = resultArray.length;
+          let r = a - currentPage;
+          if ( r<=loadNum ) {
+          loadNum = r;
+          scrollKill = true;
+          document.getElementById("loading").style.display = "none;";
+          }
+
+          let next = [];
+          for ( var i=0; i<loadnum; i++ ) {
+            next[i] = resultArray[i]
+          }
+          console.log("Scrolling loading "+next.length+" results");
+          boxResults(next);
+        }
