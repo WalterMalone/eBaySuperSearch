@@ -85,13 +85,13 @@ console.log(root);
         //console.log(boxCount);
         switch ( item.state ) {
           case "Active":
-            var color = "#B5D3FF";
+            var color = "#c7d8ee";
             break;
           case "Unsold":
             var color = "#E6E6E6";
             break;
           case "Sold":
-            var color = "#B8FCD6";
+            var color = "#c8ecd7";
             break;
           default:
           var color = "#FF0045";

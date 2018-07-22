@@ -1,7 +1,7 @@
 // Live search pull
 
 
-
+var inStr = "";
 var timeout = null;
 var oldResults = [];
 var newResults = [];
@@ -10,6 +10,7 @@ var resultArray = [];
 var sortedResults = [];
 var currentPage;
 var scrollKill = true;
+var lastStr = "";
 var timeout = null;
 var boxCount = 0;
 var set = { show:"both", sort:"" };
@@ -17,26 +18,34 @@ var query = "";
 
 
 //    Search typing input timeout filter
-function keyUp(str) {
-  scrollKill = true
-  document.getElementById("results").innerHTML = "";
-  document.getElementById("scriptDiv").innerHTML = "";
+function keyUp(root) {
+  inStr = root.value;
+  while ( true ){
+    if ( inStr==lastStr ) break;
+    document.getElementById("loading").style.display = "none";
+    lastStr = inStr;
+    clearTimeout(timeout);
+    clean();
+    if ( inStr.length < 3 ) break;
+    query = "&keywords=" + encodeURI(inStr);
+    if ( root.onkeyup.arguments["0"].code!="Enter") {
+      timeout = setTimeout( searchManager, 1000 );
+    } else searchManager();
+  }
+}
+
+
+function clean() {
   boxCount = 0;
   resultArray = [];
   sortedResults = [];
   oldResults = [];
   newResults = [];
   currentPage = 0;
-
-  if ( str.length >2 ){
-    clearTimeout(timeout)
-    query = "&keywords=" + encodeURI(str);
-    timeout = setTimeout( searchManager, 1000 );
-  }else {
-
-    document.getElementById("loading").style.display = "none";
-
-}
+  scrollKill = true
+  document.getElementById("results").innerHTML = "";
+  document.getElementById("resultCount").innerHTML = "";
+  document.getElementById("scriptDiv").innerHTML = "";
 }
 
 function searchManager() {
