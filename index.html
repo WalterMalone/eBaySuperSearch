@@ -29,12 +29,13 @@
 
     <!-- Search Box -->
     <div class="container" id="formDiv">
-      <div class="formBits">
-        <input type="text" class="form-control" id="searchForm" placeholder="Search" value="miranda densite" onkeyup="keyUp(this.value);" autofocus>
+      <div class="formBits input-group">
+        <label>Search:</label>
+        <input type="text" class="form-control" id="searchForm" placeholder="Search" value="miranda densite" onkeyup="keyUp(this);" autofocus>
       </div>
       <!-- Sorting Control -->
       <div class="formBits">
-        <div id="sortForm" class="btn-group-toggle" data-toggle="buttons">
+        <div id="showForm" class="btn-group-toggle" data-toggle="buttons">
           <label id="active" class="btn m-2 btn-secondary" onClick="setShow(this.id)">
             <input type="radio" autocomplete="off" > Active Listings
           </label>
@@ -46,17 +47,17 @@
           </label>
         </div>
       </div>
-      <div class="formBits">
+      <div class="formBits input-group mb-3">
         <label>Sorting: </label>
-        <select name="sortMenu">
+        <select onchange="setSort(this.value);" class="custom-select" id="sortForm">
+          <option value="new" selected>Newest First</option>
           <option value="old">Oldest First</option>
-          <option value="new">Newest First</option>
           <option value="hi">High Price First</option>
           <option value="lo">Low Price First</option>
           <option value="hot">Hottest First</option>
-          </select>
+        </select>
       </div>
-      <div class="formBits" style="display: none;"></div>
+
       <div class="formBits" style="display: none;"></div>
       <div class="formBits" style="display: none;"></div>
 

@@ -41,8 +41,11 @@ if ( page!=0 ) {
         page++;
         buildSearch(query, isActive, page);
       }
-
-  }
+    } else {
+      document.getElementById("results").innerHTML =
+        '<h5 style="text-align: center;">No Results for ' + inStr + '</h5>';
+      document.getElementById("loading").style.display = "none";
+    }
 
 }
 
@@ -51,6 +54,8 @@ if ( page!=0 ) {
 function firstLoad() {
 
     sortResults();
+    //console.log("length after firstload: "+resultArray.length);
+
     let firstArray = [];
     boxCount = 0;
     if ( resultArray.length<firstNum ){
