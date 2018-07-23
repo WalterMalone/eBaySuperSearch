@@ -54,6 +54,8 @@ if ( page!=0 ) {
 function firstLoad() {
 
     sortResults();
+    //console.log("length after firstload: "+resultArray.length);
+
     let firstArray = [];
     boxCount = 0;
     if ( resultArray.length<firstNum ){

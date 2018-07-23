@@ -5,12 +5,12 @@ var sortSet = "new";
 function setShow(root) {
   showSet = root;
   //console.log(root);
-  firstLoad();
+  if ( resultArray!="" ) firstLoad();
 }
 
 function setSort(root) {
   sortSet = root;
-  firstLoad();
+  if ( resultArray!="" ) firstLoad();
 }
 
 
@@ -47,5 +47,5 @@ function sortResults() {
     break;
     default: break;
   }
-//  console.log("resultArray: "+resultArray.length)
+  console.log("resultArray: "+resultArray.length);
 }
