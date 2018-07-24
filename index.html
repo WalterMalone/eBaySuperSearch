@@ -23,14 +23,14 @@
     <header style="text-align: center;">
       <div class="container">
         <h1>eBay Super Search</h1>
-      </div>
+      </div>   
     </header>
     <br />
 
     <!-- Search Box -->
     <div class="container" id="formDiv">
-      <div class="formBits input-group">
-        <label>Search:</label>
+      <div class="formBits input-group p-auto">
+        <label class="my-auto">Search:</label>
         <input type="text" class="form-control" id="searchForm" placeholder="Search" value="miranda densite" onkeyup="keyUp(this);" autofocus>
       </div>
       <!-- Sorting Control -->
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="formBits input-group mb-3">
-        <label>Sorting: </label>
+        <label class="my-auto">Sorting: </label>
         <select onchange="setSort(this.value);" class="custom-select" id="sortForm">
           <option value="new" selected>Newest First</option>
           <option value="old">Oldest First</option>
