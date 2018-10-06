@@ -1,6 +1,8 @@
 var firstNum = 30;
-
-
+var oldCall = false;
+var newCall = false;
+var oldTotal = 0;
+var newTotal = 0;
 
 
 function callback(root, isActive) {
@@ -9,10 +11,14 @@ function callback(root, isActive) {
     items       = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
     totalPages  = root.findItemsByKeywordsResponse[0].paginationOutput[0].totalPages;
     page        = root.findItemsByKeywordsResponse[0].paginationOutput[0].pageNumber;
+    newTotal    = root.findItemsByKeywordsResponse[0].paginationOutput[0].totalEntries[0];
+    newCall     = true;
   } else {
     items       = root.findCompletedItemsResponse[0].searchResult[0].item || [];
     totalPages  = root.findCompletedItemsResponse[0].paginationOutput[0].totalPages;
     page        = root.findCompletedItemsResponse[0].paginationOutput[0].pageNumber;
+    oldTotal    = root.findCompletedItemsResponse[0].paginationOutput[0].totalEntries[0];
+    oldCall     = true;
   }
 
 if ( page!=0 ) {
@@ -29,10 +35,8 @@ if ( page!=0 ) {
       oldResults = oldResults.concat(results);
     }
 
-    resultLength = newResults.length + oldResults.length;
+      dataManager();
   //  console.log("resultLength: "+resultLength);
-    document.getElementById("resultCount").innerHTML =
-      '<h5 style="text-align: center;">Results: ' + resultLength + '</h5>';
       if ( page==1 ) firstLoad();
 
       sortResults();
@@ -53,9 +57,9 @@ if ( page!=0 ) {
 
 function firstLoad() {
 
+if ( newCall && oldCall ) {
     sortResults();
     //console.log("length after firstload: "+resultArray.length);
-
     let firstArray = [];
     boxCount = 0;
     if ( resultArray.length<firstNum ){
@@ -68,6 +72,6 @@ function firstLoad() {
     document.getElementById("results").innerHTML = "";
     boxResults(firstArray);
     currentPage = firstNum;
-
+} else console.log("unready");
 
   }
