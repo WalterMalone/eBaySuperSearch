@@ -6,6 +6,7 @@ var timeout = null;
 var oldResults = [];
 var newResults = [];
 var resultLength;
+var totalResults = 0;
 var resultArray = [];
 var sortedResults = [];
 var currentPage;
@@ -15,6 +16,7 @@ var timeout = null;
 var boxCount = 0;
 var set = { show:"both", sort:"" };
 var query = "";
+
 
 
 //    Search typing input timeout filter
@@ -42,10 +44,16 @@ function clean() {
   oldResults = [];
   newResults = [];
   currentPage = 0;
-  scrollKill = true
+  scrollKill = true;
+  cActive = 0;
+  cSold   = 0;
+  cUnsold = 0;
   document.getElementById("results").innerHTML = "";
   document.getElementById("resultCount").innerHTML = "";
   document.getElementById("scriptDiv").innerHTML = "";
+  document.getElementById("activeProg").style.width = "0%";
+  document.getElementById("soldProg"  ).style.width = "0%";
+  document.getElementById("unsoldProg").style.width = "0%";
 }
 
 function searchManager() {
